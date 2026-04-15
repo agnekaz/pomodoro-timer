@@ -1,0 +1,62 @@
+$font-stack: Helvetica, sans-serif;
+$primary-color: #333;
+
+.body {
+    font: 100% $font-stack;
+    color: $primary-color;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+}
+
+@mixin flex-container(
+  $direction: row,
+  $justify: center,
+  $align: center,
+  $gap: 4px
+) {
+  display: flex;
+  flex-direction: $direction;
+  justify-content: $justify;
+  align-items: $align;
+  gap: $gap;
+}
+.timer-container{
+    height: 400px;
+    width: 400px;
+    background-color: #92A297;
+    border-radius: 10%;
+    @include flex-container(column, space-evenly, center, 4px);
+}
+
+.time-left{
+    font-size: 4rem;
+    font-weight: bold;
+}
+.session-type{
+    font-size: 1.2rem;
+}
+button{
+    height: 40px;
+    border-radius: 10px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    border-style: none;
+    background-color: #f0f0f0;
+    color: #333;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    &:hover{
+        background-color: #333;
+        color: #f0f0f0;
+    }
+}
+
+.session-type{
+    font-size: 1.5rem;
+    font-weight: bold;
+}

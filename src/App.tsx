@@ -1,11 +1,11 @@
-import './App.css'
+import './App.scss'
 import Timer from './components/Timer'
 
 function App() {
   
   return (
     <>
-     <div className="wrapper">
+     <div className="body">
       <h1>Pomodoro timer</h1>
       <Timer/>
      </div>
