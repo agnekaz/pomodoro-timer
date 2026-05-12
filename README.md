@@ -22,7 +22,6 @@ Durations and the “long break every 4 work sessions” rule are defined in `sr
 | Sass         | `App.scss` styles             |
 | ESLint       | `npm run lint`                |
 
-This repo uses `@vitejs/plugin-react` (see `vite.config.ts`). There is **no** React Compiler enabled in this project.
 
 ## Prerequisites
 
@@ -53,16 +52,3 @@ src/
   utils/
     formatTime.ts         # `MM:SS` formatting for the countdown
 ```
-
-## Customising
-
-Edit **`src/hooks/usePomodoroTimer.ts`**:
-
-- `config.workDuration`, `config.breakDuration`, `config.longBreakDuration` (values are in **seconds**).
-- Long-break cadence: `nextCount % 4 === 0` in the `SWITCH_SESSION` case.
-
-The session label shown in the UI is the internal session id (`work`, `break`, `longBreak`). Rename or map it in `Timer.tsx` if you want user-facing copy (e.g. “Long break”).
-
-## Favicon
-
-`index.html` references `/favicon.svg`. If the file is missing from `public/`, add one or update the `<link>` in `index.html`.
