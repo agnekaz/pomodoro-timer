@@ -1,73 +1,68 @@
-# React + TypeScript + Vite
+# Pomodoro timer
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A small single-page Pomodoro timer built with **React**, **TypeScript**, **Vite**, and **Sass**. Timer logic lives in a `useReducer` hook (`usePomodoroTimer`); the UI is a minimal `Timer` component plus layout in `App`.
 
-Currently, two official plugins are available:
+## Behaviour
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- **Work**: 25 minutes (default).
+- **Short break**: 5 minutes after each completed work session, except every fourth completion.
+- **Long break**: 15 minutes after every **fourth** completed work session (after work sessions 4, 8, 12, …).
+- **Start / Pause**: toggles the countdown; when time reaches zero while running, the session switches automatically.
+- **Session counter**: shows the next work session number (`completed work sessions + 1`).
 
-## React Compiler
+Durations and the “long break every 4 work sessions” rule are defined in `src/hooks/usePomodoroTimer.ts` in the `config` object and the `SWITCH_SESSION` branch of the reducer.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Tech stack
 
-## Expanding the ESLint configuration
+| Piece        | Role                          |
+| ------------ | ----------------------------- |
+| React 19     | UI                            |
+| TypeScript   | Types and build-time checks   |
+| Vite 8       | Dev server and production build |
+| Sass         | `App.scss` styles             |
+| ESLint       | `npm run lint`                |
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+This repo uses `@vitejs/plugin-react` (see `vite.config.ts`). There is **no** React Compiler enabled in this project.
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## Prerequisites
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+- **Node.js** (current LTS is fine)
+- **npm** (or use your preferred client with equivalent commands)
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Scripts
+
+| Command          | Description                                      |
+| ---------------- | ------------------------------------------------ |
+| `npm run dev`    | Start the Vite dev server (HMR)                  |
+| `npm run build`  | Typecheck (`tsc -b`) then production Vite build  |
+| `npm run preview`| Serve the built app from `dist/`                 |
+| `npm run lint`   | Run ESLint on the project                        |
+
+## Project layout
+
+```
+src/
+  App.tsx                 # Page shell and title
+  App.scss                # Layout and timer styling
+  main.tsx                # React root
+  index.css               # Global baseline (e.g. full-height root)
+  components/
+    Timer.tsx             # Displays session, time, session #, Start/Pause
+  hooks/
+    usePomodoroTimer.ts   # Reducer, intervals, session switching
+  utils/
+    formatTime.ts         # `MM:SS` formatting for the countdown
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Customising
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Edit **`src/hooks/usePomodoroTimer.ts`**:
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+- `config.workDuration`, `config.breakDuration`, `config.longBreakDuration` (values are in **seconds**).
+- Long-break cadence: `nextCount % 4 === 0` in the `SWITCH_SESSION` case.
+
+The session label shown in the UI is the internal session id (`work`, `break`, `longBreak`). Rename or map it in `Timer.tsx` if you want user-facing copy (e.g. “Long break”).
+
+## Favicon
+
+`index.html` references `/favicon.svg`. If the file is missing from `public/`, add one or update the `<link>` in `index.html`.
