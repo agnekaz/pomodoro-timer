@@ -2,6 +2,8 @@
 
 A small single-page Pomodoro timer built with **React**, **TypeScript**, **Vite**, and **Sass**. Timer logic lives in a `useReducer` hook (`usePomodoroTimer`); the UI is a minimal `Timer` component plus layout in `App`.
 
+**Deployment:** [https://pomodoro-timer-qw62.vercel.app/](https://pomodoro-timer-qw62.vercel.app/)
+
 ## Behaviour
 
 - **Work**: 25 minutes (default).
