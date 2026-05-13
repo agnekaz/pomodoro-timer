@@ -30,7 +30,7 @@ const initialState: TimerState = {
     sessionCount: 0,
 }
 
-const reducer = (state: TimerState, action: Action) => {
+const reducer = (state: TimerState, action: Action): TimerState => {
     switch (action.type) {
         case 'TICK':
             return {
