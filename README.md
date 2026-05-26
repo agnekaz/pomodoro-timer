@@ -54,3 +54,8 @@ src/
   utils/
     formatTime.ts         # `MM:SS` formatting for the countdown
 ```
+
+## Visuals
+
+<img width="1791" height="922" alt="image" src="https://github.com/user-attachments/assets/99a0a680-5933-4e62-81d6-ad6e8352104d" />
+
